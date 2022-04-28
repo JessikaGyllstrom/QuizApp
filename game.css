@@ -4,7 +4,7 @@
     width: 100%;
     font-size: 1.8rem;
     border: 0.1 rem solid reg(86,165,235,0.25);
-    background-color: antiquewhite;
+    background-color: rgb(246, 245, 245);
 }
 .choice-container:hover {
     cursor: pointer;
@@ -14,9 +14,26 @@
 }
 .choice-prefix {
     padding: 1.5rem 2.5rem;
-    background-color: rgb(10, 133, 152);
+    background-color:  rgb(118, 12, 171);
 }
 .choice-text {
     padding: 1.5rem;
     width: 100%;
+}
+.correct {
+    background-color: rgb(68, 191, 68);
+}
+.incorrect {
+    background-color: rgb(212, 101, 101);
+}
+#hud {
+    display: flex;
+    justify-content: space-between;
+}
+.hud-prefix {
+    text-align: center;
+    font-size: 2rem;
+}
+.hud-main-text {
+    text-align: center;
 }
