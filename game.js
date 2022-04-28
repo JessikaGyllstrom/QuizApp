@@ -13,40 +13,39 @@ let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
 
-let questions = [
-    {
-        question: "question1", 
-        choice1: "choice1", 
-        choice2: "choice2",
-        choice3: "choice3",
-        choice4: "choice4",
-        answer: 1,
-    },
-    {
-        question: "question2", 
-        choice1: "choice1", 
-        choice2: "choice2",
-        choice3: "choice3",
-        choice4: "choice4",
-        answer: 1,
-    },
-    {
-        question: "question3", 
-        choice1: "choice1", 
-        choice2: "choice2",
-        choice3: "choice3",
-        choice4: "choice4",
-        answer: 1,
-    },
-    {
-        question: "question4", 
-        choice1: "choice1", 
-        choice2: "choice2",
-        choice3: "choice3",
-        choice4: "choice4",
-        answer: 1,
-    }
-];
+let questions = [];
+fetch(
+    'https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple'
+)
+    .then((res) => {
+        return res.json();
+    })
+    .then((loadedQuestions) => {
+        questions = loadedQuestions.results.map((loadedQuestion) => {
+            const formattedQuestion = {
+                question: loadedQuestion.question,
+            };
+
+            const answerChoices = [...loadedQuestion.incorrect_answers];
+            formattedQuestion.answer = Math.floor(Math.random() * 4) + 1;
+            answerChoices.splice(
+                formattedQuestion.answer - 1,
+                0,
+                loadedQuestion.correct_answer
+            );
+
+            answerChoices.forEach((choice, index) => {
+                formattedQuestion['choice' + (index + 1)] = choice;
+            });
+
+            return formattedQuestion;
+        });
+
+        startGame();
+    })
+    .catch((err) => {
+        console.error(err);
+    });
 
 const CORRECT_BONUS = 10;
 const MAX_QUESTIONS = 3;
@@ -97,4 +96,3 @@ incrementScore = num => {
     score += num;
     scoreText.innerText = score;
 }
-startGame();
